@@ -1,4 +1,4 @@
-FROM registry.d/kdev:nodejs
+FROM nnurphy/kdev:nodejs
 
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
