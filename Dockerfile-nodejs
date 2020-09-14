@@ -17,7 +17,7 @@ RUN set -eux \
   \
   ; curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.deb.sh | bash \
   ; apt install -y --no-install-recommends telepresence iptables \
-  ; update-alternatives --set iptables /usr/sbin/iptables-legacy \
+  #; update-alternatives --set iptables /usr/sbin/iptables-legacy \
   \
   ; apt-get autoremove -y && apt-get clean -y \
   ; rm -rf /var/lib/apt/lists/* \
