@@ -77,6 +77,6 @@ RUN wget -q -O- ${just_url} \
         | tar zxvf - -C /usr/local/bin istio-${ISTIO_VERSION}/bin/istioctl --strip-components=2
 
 COPY home /root/
-COPY sources.list /etc/apt/sources.list
+
 
 
