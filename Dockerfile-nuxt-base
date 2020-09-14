@@ -1,0 +1,17 @@
+FROM registry.d/js
+
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV TIMEZONE=Asia/Shanghai
+
+RUN set -eux \
+  ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
+  ; echo "$TIMEZONE" > /etc/timezone
+
+WORKDIR /app
+
+COPY ./npm/package.json /npm/
+ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
+RUN cd /npm \
+ && npm install \
+ && npm install vue-clipboard2 loglevel
