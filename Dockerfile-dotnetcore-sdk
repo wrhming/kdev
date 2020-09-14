@@ -51,6 +51,8 @@ ENV watchexec_version=1.14.0
 ENV yq_version=3.3.4
 ENV websocat_version=1.6.0
 ENV K8S_VERSION=v1.19.1
+ARG HELM_VERSION=3.3.1
+ARG ISTIO_VERSION=1.7.1
 
 ARG just_url=https://github.com/casey/just/releases/download/v${just_version}/just-v${just_version}-x86_64-unknown-linux-musl.tar.gz
 ARG watchexec_url=https://github.com/watchexec/watchexec/releases/download/${watchexec_version}/watchexec-${watchexec_version}-x86_64-unknown-linux-musl.tar.xz
@@ -68,9 +70,13 @@ RUN wget -q -O- ${just_url} \
  && wget -q -O /usr/local/bin/websocat ${websocat_url} \
     && chmod +x /usr/local/bin/websocat \
  && wget -q -O- ${kubectl_url} \
-    | tar zxf - --strip-components=3 -C /usr/local/bin kubernetes/client/bin/kubectl
+    | tar zxf - --strip-components=3 -C /usr/local/bin kubernetes/client/bin/kubectl \
+ && curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+        | tar zxvf - -C /usr/local/bin linux-amd64/helm --strip-components=1 \
+ && curl -L https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux-amd64.tar.gz \
+        | tar zxvf - -C /usr/local/bin istio-${ISTIO_VERSION}/bin/istioctl --strip-components=2
 
-COPY zshrc /root/.zshrc
+COPY home /root/
 COPY sources.list /etc/apt/sources.list
 
 

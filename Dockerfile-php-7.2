@@ -2,6 +2,8 @@ FROM nnurphy/phpf:7.2
 
 ENV K8S_VERSION=v1.19.1
 ARG kubectl_url=https://dl.k8s.io/${K8S_VERSION}/kubernetes-client-linux-amd64.tar.gz
+ARG HELM_VERSION=3.3.1
+ARG ISTIO_VERSION=1.7.1
 
 RUN set -eux \
   ; apt-get update \
@@ -20,4 +22,8 @@ RUN set -eux \
   ; apt-get autoremove -y && apt-get clean -y \
   ; rm -rf /var/lib/apt/lists/* \
   ; wget -q -O- ${kubectl_url} \
-    | tar zxf - --strip-components=3 -C /usr/local/bin kubernetes/client/bin/kubectl
+    | tar zxf - --strip-components=3 -C /usr/local/bin kubernetes/client/bin/kubectl \
+  ; curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+        | tar zxvf - -C /usr/local/bin linux-amd64/helm --strip-components=1 \
+  ; curl -L https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux-amd64.tar.gz \
+        | tar zxvf - -C /usr/local/bin istio-${ISTIO_VERSION}/bin/istioctl --strip-components=2
