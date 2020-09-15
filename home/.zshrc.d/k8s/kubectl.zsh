@@ -18,6 +18,7 @@ alias ko='kubectl get -o yaml'
 alias kd='kubectl describe'
 alias ke='kubectl edit'
 alias kc='kubectl create'
+alias klb="kubectl label --overwrite"
 
 # Execute a kubectl command against all namespaces
 alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
@@ -81,10 +82,12 @@ alias kdeli='kubectl delete ingress'
 
 # Namespace management
 alias kgns='kubectl get namespaces'
+alias kgnsl='kgns -o jsonpath="{.items[*].metadata.name}" -l'
 alias kons='kubectl get -o yaml namespaces'
 alias kens='kubectl edit namespace'
 alias kdns='kubectl describe namespace'
 alias kcns='kubectl create namespace'
+alias klbns="klb namespace"
 alias kdelns='kubectl delete namespace'
 alias kcn='kubectl config set-context $(kubectl config current-context) --namespace'
 
