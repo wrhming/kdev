@@ -1,5 +1,28 @@
 FROM amd64/buildpack-deps:focal-scm
 
+ENV \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip \
+    # PowerShell telemetry for docker image usage
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04
+
+# Install .NET Core SDK
+RUN set -eux \
+  ; dotnet_sdk_version=2.2.207 \
+  ; curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
+  ; dotnet_sha512='9d70b4a8a63b66da90544087199a0f681d135bf90d43ca53b12ea97cc600a768b0a3d2f824cfe27bd3228e058b060c63319cd86033be8b8d27925283f99de958' \
+  ; echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
+  ; mkdir -p /usr/share/dotnet \
+  ; tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
+  ; rm dotnet.tar.gz \
+  ; ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+  # Trigger first run experience by running arbitrary cmd
+  ; dotnet help
+
 ENV just_version=0.7.2
 ENV watchexec_version=1.14.0
 ENV yq_version=3.3.4
@@ -49,29 +72,3 @@ RUN set -eux \
         | tar zxvf - -C /usr/local/bin istio-${ISTIO_VERSION}/bin/istioctl --strip-components=2
 
 COPY home /root/
-
-ENV \
-    # Enable detection of running in a container
-    DOTNET_RUNNING_IN_CONTAINER=true \
-    # Enable correct mode for dotnet watch (only mode supported in a container)
-    DOTNET_USE_POLLING_FILE_WATCHER=true \
-    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip \
-    # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetCoreSDK-Ubuntu-20.04
-
-# Install .NET Core SDK
-RUN set -eux \
-  ; dotnet_sdk_version=2.2.207 \
-  ; curl -SL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-  ; dotnet_sha512='9d70b4a8a63b66da90544087199a0f681d135bf90d43ca53b12ea97cc600a768b0a3d2f824cfe27bd3228e058b060c63319cd86033be8b8d27925283f99de958' \
-  ; echo "$dotnet_sha512 dotnet.tar.gz" | sha512sum -c - \
-  ; mkdir -p /usr/share/dotnet \
-  ; tar -ozxf dotnet.tar.gz -C /usr/share/dotnet \
-  ; rm dotnet.tar.gz \
-  ; ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
-  # Trigger first run experience by running arbitrary cmd
-  ; dotnet help
-
-
-
