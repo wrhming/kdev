@@ -206,11 +206,14 @@ function clean-evicted-pod {
         | xargs -n2 -l bash -c "kubectl delete pods \$0 --namespace=\$1"
 }
 
-function rm-stucked-ns {
+function kube-rm-stucked-ns {
     kubectl get namespace "$1" -o json \
         | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
         | kubectl replace --raw /api/v1/namespaces/$1/finalize -f -
 }
+
+alias kube-rm-strucked='kdel --grace-period=0 --force'
+alias kube-rm-finalizer="kubectl patch -p '{\"metadata\":{\"finalizers\":null}}'"
 
 ### helm
 if (( $+commands[helm] )); then
