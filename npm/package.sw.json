@@ -1,0 +1,67 @@
+{
+    "name": "KAS",
+    "version": "1.0.1",
+    "description": "'新明辉 KAS",
+    "author": "ds.w",
+    "private": true,
+    "config": {
+      "nuxt": {
+        "host": "0.0.0.0",
+        "port": "3200"
+      }
+    },
+    "scripts": {
+      "dev": "nuxt",
+      "build": "nuxt build",
+      "start": "nuxt start",
+      "generate": "nuxt generate",
+      "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+      "precommit": "npm run lint"
+    },
+    "dependencies": {
+      "@nuxtjs/axios": "^5.3.1",
+      "@xkeshi/vue-barcode": "^1.0.0",
+      "element-resize-detector": "^1.1.14",
+      "element-ui": "^2.4.1",
+      "interactjs": "^1.3.4",
+      "lodash": "^4.17.10",
+      "mouse-wheel": "^1.2.0",
+      "nuxt": "^1.4.0",
+      "nuxt-class-component": "^1.2.1",
+      "typescript": "^2.9.2",
+      "vue-amap": "^0.5.8",
+      "vue-awesome": "^3.1.0",
+      "vue-class-component": "^6.2.0",
+      "vue-clipboard2": "^0.2.1",
+      "vue-count-to": "^1.0.13",
+      "vue-property-decorator": "^7.0.0",
+      "vue-resize": "^0.4.4",
+      "vue-scroll-bar": "^1.2.2",
+      "vue2-verify": "^1.0.2",
+      "vuebar": "^0.0.18",
+      "vuex-class": "^0.3.1"
+    },
+    "devDependencies": {
+      "@nuxtjs/proxy": "^1.2.4",
+      "echarts": "^4.1.0",
+      "vue-ueditor": "^0.1.3",
+      "babel-eslint": "^8.2.1",
+      "babel-plugin-component": "^1.1.1",
+      "babel-plugin-transform-class-properties": "^6.24.1",
+      "babel-plugin-transform-decorators-legacy": "^1.3.5",
+      "body-parser": "^1.18.3",
+      "connect-multiparty": "^2.1.1",
+      "eslint": "^4.15.0",
+      "eslint-friendly-formatter": "^3.0.0",
+      "eslint-loader": "^1.7.1",
+      "eslint-plugin-vue": "^4.0.0",
+      "express": "^4.16.3",
+      "express-session": "^1.15.6",
+      "isomorphic-form-data": "^1.0.0",
+      "node-sass": "^4.9.2",
+      "request": "^2.87.0",
+      "sass-loader": "^7.0.3",
+      "ts-loader": "^3.5.0",
+      "webpack-node-externals": "^1.7.2"
+    }
+  }
